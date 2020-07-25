@@ -11,7 +11,7 @@ namespace Bulls_and_cows
             GameManager bullsAndCowsGame = new GameManager();
             bullsAndCowsGame.StartGame();
 
-            Console.WriteLine("\n\nPowered by [new4nc3__#]\nPress any key to exit . . .");
+            Console.WriteLine("\n\nPowered by [New4nc3]\nPress any key to exit . . .");
             Console.ReadKey(true);
         }
     }
