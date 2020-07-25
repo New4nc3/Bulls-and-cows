@@ -40,8 +40,8 @@ namespace Bulls_and_cows
         public void GenerateNumberWithUniqueDigits()
         {
             randomed_ = 0;
-            _availableDigits = GetAvailableDigits();
-            RandomedDigits[0] = Convert.ToByte(GetAndExcludeRandomDigit(1));
+            _availableDigits = GetAvailableDigitsList();
+            RandomedDigits[0] = GetAndExcludeRandomDigit(startFromIndex: 1);
 
             for (int i = 1; i < DigitCount; i++)
             {
@@ -49,21 +49,21 @@ namespace Bulls_and_cows
             }
         }
 
-        private static List<byte> GetAvailableDigits()
+        private byte GetAndExcludeRandomDigit(int startFromIndex = 0)
+        {
+            int index = _random.Next(startFromIndex, _availableDigits.Count);
+            byte toReturn = _availableDigits[index];
+
+            _availableDigits.RemoveAt(index);
+            return toReturn;
+        }
+
+        private static List<byte> GetAvailableDigitsList()
         {
             return new List<byte>()
             {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
             };
-        }
-
-        private byte GetAndExcludeRandomDigit(int minIndex = 0)
-        {
-            int index = _random.Next(minIndex, _availableDigits.Count);
-            byte toReturn = _availableDigits[index];
-
-            _availableDigits.RemoveAt(index);
-            return toReturn;
         }
     }
 }
