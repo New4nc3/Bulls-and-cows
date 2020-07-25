@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Bulls_and_cows
@@ -9,6 +10,7 @@ namespace Bulls_and_cows
         public uint TriesCount { get; private set; } = 0;
 
         private NumberGenerator _numGen;
+        private Stopwatch _stopwatch;
         private List<byte> _guessedDigits;
 
         private string _guessedString;
@@ -17,16 +19,22 @@ namespace Bulls_and_cows
         private bool _repeatGuessing;
         private bool _playAgain;
 
+        public GameManager()
+        {
+            _numGen = new NumberGenerator();
+            _stopwatch = new Stopwatch();
+        }
+
         public void StartGame()
         {
             do
             {
-                _numGen = new NumberGenerator();
                 _numGen.GenerateNumberWithUniqueDigits();
                 TriesCount = 0;
 
                 Console.Clear();
                 Console.WriteLine($"I've randomed new {_numGen.DigitCount}-digits number. Try to guess it!");
+                _stopwatch.Restart();
 
                 do
                 {
@@ -46,16 +54,18 @@ namespace Bulls_and_cows
 
                 } while (_repeatGuessing);
 
+                _stopwatch.Stop();
+
                 if (TriesCount == 1)
                 {
-                    Console.WriteLine($"\nAbsolutely amazing! You guess my randomed number {_numGen.Randomed} at first try! Unbelievable!");
+                    Console.Write($"\nAbsolutely amazing! You guess my randomed number {_numGen.Randomed} at first try! Unbelievable!");
                 }
                 else
                 {
-                    Console.WriteLine($"\nYou won! I've randomed {_numGen.Randomed} and you guessed it by {TriesCount} tries.");
+                    Console.Write($"\nYou won! I've randomed {_numGen.Randomed} and you guessed it by {TriesCount} tries.");
                 }
 
-                Console.WriteLine("\nDo you want to play again?\n <Enter> - Yes\n <Any key> - No");
+                Console.WriteLine($" Elapsed time: {_stopwatch.Elapsed}.\n\nDo you want to play again?\n <Enter> - Yes\n <Any key> - No");
                 _playAgain = Console.ReadKey(true).Key == ConsoleKey.Enter ? true : false;
 
             } while (_playAgain);
